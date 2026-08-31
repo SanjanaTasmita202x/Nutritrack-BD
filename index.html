@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack BD</title>
+    <!-- Modern, clean font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-container">
+        <div class="splash-content">
+            <h1 class="brand-title">NutriTrack BD</h1>
+            <p class="brand-tagline">“Track Better. Eat Smarter. Live Healthier.”</p>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">Sign In</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container" style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="section-card">
+                <div class="splash-content" style="padding: var(--spacing-md) 0;">
+                    <h2 class="brand-title" style="font-size: 1.8rem; margin-bottom: 0;">Welcome Back</h2>
+                </div>
+
+                <form id="login-form" onsubmit="initiateLogin(event)">
+                    <div class="input-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" class="input-field" placeholder="Enter your email"
+                            required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="login-password" class="input-field"
+                                placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle-btn"
+                                onclick="togglePasswordVisibility('login-password')">👁️</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn">Sign In</button>
+                </form>
+
+                <div style="text-align: center; margin-top: var(--spacing-lg);">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        Don't have an account?
+                        <button type="button" class="text-btn" onclick="navigate('signup-screen')">Sign Up</button>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sign Up Screen -->
+    <div id="signup-screen" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('login-screen')">←</button>
+            <h1 class="header-title">Sign Up</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+            <div class="section-card">
+                <form id="signup-form" onsubmit="initiateSignUp(event)">
+                    <div class="input-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" class="input-field" placeholder="Enter your email"
+                            required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="signup-password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="signup-password" class="input-field"
+                                placeholder="Create a password" required minlength="6">
+                            <button type="button" class="password-toggle-btn"
+                                onclick="togglePasswordVisibility('signup-password')">👁️</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="signup-confirm-password" class="input-field"
+                                placeholder="Confirm your password" required minlength="6">
+                            <button type="button" class="password-toggle-btn"
+                                onclick="togglePasswordVisibility('signup-confirm-password')">👁️</button>
+                        </div>
+                    </div>
+
+                    <p id="signup-error"
+                        style="color: #e53e3e; display: none; margin-bottom: 16px; font-weight: 500; font-size: 0.9rem;">
+                    </p>
+
+                    <button type="submit" class="primary-btn">Sign Up</button>
+                </form>
+
+                <div style="text-align: center; margin-top: var(--spacing-lg);">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        Already have an account?
+                        <button type="button" class="text-btn" onclick="navigate('login-screen')">Sign In</button>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- My Profile Screen -->
+    <div id="profile-setup" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">My Profile</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: var(--spacing-lg);">
+                <div
+                    style="width: 80px; height: 80px; background-color: var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: var(--spacing-sm);">
+                    👤
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem; text-align: center;">
+                    Manage your personal details to personalize your experience.
+                </p>
+            </div>
+
+            <form id="profile-form" onsubmit="completeProfile(event)">
+                <div class="section-card">
+                    <h3 class="section-title" style="margin-bottom: var(--spacing-md);">Personal Information</h3>
+
+                    <div class="input-group">
+                        <label for="profile-name">Full Name <span style="color: #e53e3e;">*</span></label>
+                        <input type="text" id="profile-name" class="input-field" placeholder="e.g., Sanjana" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="profile-age">Age <span style="color: #e53e3e;">*</span></label>
+                        <input type="number" id="profile-age" class="input-field" placeholder="Years" required min="1"
+                            oninput="checkAgeNotice()">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="profile-gender">Gender <span style="color: #e53e3e;">*</span></label>
+                        <select id="profile-gender" class="input-field" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="prefer_not_to_say">Prefer not to say</option>
+                        </select>
+                    </div>
+
+                    <div id="under-12-notice" class="coming-soon-notice"
+                        style="display: none; margin-bottom: var(--spacing-md); text-align: left; background-color: #fff3cd; border: 1px solid #ffeeba;">
+                        <p style="color: #856404; font-weight: 500; margin-bottom: 4px;">⚠️ Parent/Guardian Supervision
+                            Recommended</p>
+                        <p style="color: #856404; font-size: 0.85rem;">Since you are under 12, please use this app with
+                            a parent or guardian. This app is for informational purposes and is not a substitute for
+                            professional medical advice or a registered dietitian.</p>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">
+                        Body Information</h3>
+
+                    <div class="input-group">
+                        <label for="profile-height">Height (cm) <span style="color: #e53e3e;">*</span></label>
+                        <input type="number" id="profile-height" class="input-field" placeholder="e.g., 170" required
+                            min="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="profile-weight">Current Weight (kg) <span style="color: #e53e3e;">*</span></label>
+                        <input type="number" id="profile-weight" class="input-field" placeholder="e.g., 65" required
+                            min="1">
+                    </div>
+
+                    <div
+                        style="display: flex; flex-direction: column; gap: var(--spacing-md); margin-top: var(--spacing-lg);">
+                        <button type="button" class="secondary-btn" style="width: 100%;"
+                            onclick="navigate('home-screen')">Back</button>
+                        <button type="submit" class="primary-btn" style="width: 100%; margin-top: 0;">Save
+                            Profile</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="home-screen" class="view active">
+        <header class="app-header" style="justify-content: space-between; position: relative;">
+            <h1 class="header-title"
+                style="margin: 0; text-align: left; line-height: 1; display: flex; align-items: center; gap: 4px;">
+                <span style="font-size: 1.25rem;">NutriTrack BD</span>
+            </h1>
+            <div style="position: relative;">
+                <button id="account-icon-btn" class="icon-button" onclick="toggleAccountMenu()"
+                    style="width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background-color: #f0f0f0; color: #333; padding: 0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+
+                <!-- Account Dropdown Menu -->
+                <div id="account-dropdown-menu" class="account-dropdown">
+                    <div class="dropdown-item" onclick="handleAccountAction('profile-setup')">
+                        <span style="font-size: 1.2rem;">👤</span> My Profile
+                    </div>
+                    <div class="dropdown-item" onclick="handleAccountAction('login-screen')">
+                        <span style="font-size: 1.2rem;">🔑</span> Sign In
+                    </div>
+                    <div class="dropdown-item" onclick="handleAccountAction('signup-screen')">
+                        <span style="font-size: 1.2rem;">📝</span> Sign Up
+                    </div>
+                    <div class="dropdown-item logout" onclick="handleAccountAction('logout')">
+                        <span style="font-size: 1.2rem;">🚪</span> Log Out
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="container">
+            <div class="card-grid">
+                <!-- Row 1 -->
+                <div class="feature-card" onclick="navigate('food-library')">
+                    <div class="card-icon">🍎</div>
+                    <h2 class="card-title">Food Library</h2>
+                    <p class="card-desc">Explore foods and their calorie information</p>
+                </div>
+
+                <div class="feature-card" onclick="navigate('bmi-calculator')">
+                    <div class="card-icon">⚖️</div>
+                    <h2 class="card-title">BMI Calculator</h2>
+                    <p class="card-desc">Calculate your Body Mass Index</p>
+                </div>
+
+                <div class="feature-card" onclick="navigate('bmr-calculator')">
+                    <div class="card-icon">🔥</div>
+                    <h2 class="card-title">BMR Calculator</h2>
+                    <p class="card-desc">Calculate your Basal Metabolic Rate</p>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="feature-card" onclick="navigate('diabetes-guide')">
+                    <div class="card-icon">🩸</div>
+                    <h2 class="card-title">Diabetes-Friendly Meal Guide</h2>
+                    <p class="card-desc">Suggested meals for blood sugar management</p>
+                </div>
+
+                <div class="feature-card" onclick="navigate('cholesterol-guide')">
+                    <div class="card-icon">🫀</div>
+                    <h2 class="card-title">Cholesterol-Friendly Meal Guide</h2>
+                    <p class="card-desc">Heart-healthy food recommendations</p>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="feature-card" onclick="navigate('daily-calorie-log')">
+                    <div class="card-icon">📝</div>
+                    <h2 class="card-title">Daily Food Log</h2>
+                    <p class="card-desc">Track your daily food and calorie intake</p>
+                </div>
+
+                <div class="feature-card" onclick="navigate('history-progress')">
+                    <div class="card-icon">📈</div>
+                    <h2 class="card-title">History & Weight Progress</h2>
+                    <p class="card-desc">View food history and weight changes</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Food Library View -->
+    <div id="food-library" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">Food Library</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+            <div class="search-container">
+                <input type="text" class="input-field search-bar"
+                    placeholder="Search foods (e.g., Khichuri, Biryani)...">
+            </div>
+
+            <div class="filter-area">
+                <button class="pill-btn active">All</button>
+                <button class="pill-btn">Rice</button>
+                <button class="pill-btn">Meat</button>
+                <button class="pill-btn">Fish</button>
+                <button class="pill-btn">Veg</button>
+            </div>
+
+            <div class="food-list">
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🍚</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">White Rice</h3>
+                        <p class="food-method">Boiled plain rice</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">130 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🫓</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Ruti</h3>
+                        <p class="food-method">Whole wheat flatbread</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">297 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🥣</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Dal</h3>
+                        <p class="food-method">Lentil soup</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">116 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🐟</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Fried Fish</h3>
+                        <p class="food-method">Shallow fried with spices</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">200 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🥗</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Vegetable Curry</h3>
+                        <p class="food-method">Mixed vegetables</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">60 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🥬</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Shak Bhaji</h3>
+                        <p class="food-method">Sautéed leafy greens</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">80 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🍗</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Chicken Curry</h3>
+                        <p class="food-method">Cooked with spices</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">180 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🥚</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Egg</h3>
+                        <p class="food-method">Boiled</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">155 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🍲</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Khichuri</h3>
+                        <p class="food-method">Rice and lentils</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">180 kcal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card">
+                    <div class="food-image-area"><span class="food-emoji">🍛</span></div>
+                    <div class="food-info-area">
+                        <h3 class="food-name">Chicken Biryani</h3>
+                        <p class="food-method">Spiced rice with chicken</p>
+                        <div class="food-nutrition">
+                            <span class="nutrition-badge">Per 100g</span>
+                            <span class="calorie-text">250 kcal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="coming-soon-notice">
+                <p>More Bangladeshi foods coming soon!</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- BMI Calculator View -->
+    <div id="bmi-calculator" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">BMI Calculator</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+            <div class="input-group">
+                <label for="bmi-height">Height (cm)</label>
+                <input type="number" id="bmi-height" class="input-field" placeholder="e.g., 170">
+            </div>
+            <div class="input-group">
+                <label for="bmi-weight">Weight (kg)</label>
+                <input type="number" id="bmi-weight" class="input-field" placeholder="e.g., 65">
+            </div>
+
+            <p id="bmi-error" style="color: #e53e3e; display: none; margin-bottom: 16px; font-weight: 500;"></p>
+            <button class="primary-btn" onclick="calculateBMI()">Calculate BMI</button>
+
+            <div class="result-card">
+                <p class="result-label">Your BMI</p>
+                <h2 class="result-value" id="bmi-result-value">--</h2>
+                <p class="result-category">Category: <span id="bmi-result-category">--</span></p>
+                <p class="coming-soon-text" id="bmi-coming-soon">Calculation feature coming soon.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- BMR Calculator View -->
+    <div id="bmr-calculator" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">BMR Calculator</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="bmr-age">Age</label>
+                    <input type="number" id="bmr-age" class="input-field" placeholder="Years">
+                </div>
+                <div class="input-group">
+                    <label for="bmr-gender">Gender</label>
+                    <select id="bmr-gender" class="input-field">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="bmr-height">Height (cm)</label>
+                <input type="number" id="bmr-height" class="input-field" placeholder="e.g., 170">
+            </div>
+            <div class="input-group">
+                <label for="bmr-weight">Weight (kg)</label>
+                <input type="number" id="bmr-weight" class="input-field" placeholder="e.g., 65">
+            </div>
+
+            <button class="primary-btn">Calculate BMR</button>
+
+            <div class="result-card">
+                <p class="result-label">Your Daily BMR</p>
+                <h2 class="result-value">-- <span>kcal</span></h2>
+                <p class="coming-soon-text">Calculation feature coming soon.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Diabetes-Friendly Meal Guide View -->
+    <div id="diabetes-guide" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">Diabetes-Friendly Meals</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+            <div class="coming-soon-notice" style="margin-bottom: var(--spacing-md);">
+                <p>Note: These are general suggestions. Not medical advice.</p>
+            </div>
+
+            <!-- Breakfast -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">Breakfast</h3>
+                </div>
+                <div class="food-list">
+                    <div class="food-card">
+                        <div class="food-image-area"><span class="food-emoji">🫓</span></div>
+                        <div class="food-info-area">
+                            <h3 class="food-name">Lal Attar Ruti & Sabji</h3>
+                            <div class="food-nutrition">
+                                <span class="nutrition-badge">Portion: 2 Ruti, 1 cup Sabji</span>
+                                <span class="calorie-text">~320 kcal</span>
+                            </div>
+                            <p class="food-method" style="margin-top: 4px;">Carbs: 45g | Complex carbs digest slower,
+                                avoiding blood sugar spikes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lunch -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">Lunch</h3>
+                </div>
+                <div class="food-list">
+                    <div class="food-card">
+                        <div class="food-image-area"><span class="food-emoji">🍚</span></div>
+                        <div class="food-info-area">
+                            <h3 class="food-name">Red Rice, Fish & Dal</h3>
+                            <div class="food-nutrition">
+                                <span class="nutrition-badge">Portion: 1 cup Rice</span>
+                                <span class="calorie-text">~450 kcal</span>
+                            </div>
+                            <p class="food-method" style="margin-top: 4px;">Carbs: 60g | Red rice has lower GI than
+                                white rice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dinner -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">Dinner</h3>
+                </div>
+                <div class="food-list">
+                    <div class="food-card">
+                        <div class="food-image-area"><span class="food-emoji">🥣</span></div>
+                        <div class="food-info-area">
+                            <h3 class="food-name">Vegetable Soup & Chicken</h3>
+                            <div class="food-nutrition">
+                                <span class="nutrition-badge">Portion: 1 bowl, 2 pieces</span>
+                                <span class="calorie-text">~300 kcal</span>
+                            </div>
+                            <p class="food-method" style="margin-top: 4px;">Carbs: 20g | Light dinner helps morning
+                                fasting sugar levels.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="coming-soon-notice" style="margin-top: 16px;">More recommendations coming soon.</p>
+        </main>
+    </div>
+
+    <!-- Cholesterol-Friendly Meal Guide View -->
+    <div id="cholesterol-guide" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">Cholesterol-Friendly Meals</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+            <div class="coming-soon-notice" style="margin-bottom: var(--spacing-md);">
+                <p>Note: These are general suggestions. Not medical advice.</p>
+            </div>
+
+            <!-- Breakfast -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">Breakfast</h3>
+                </div>
+                <div class="food-list">
+                    <div class="food-card">
+                        <div class="food-image-area"><span class="food-emoji">🥣</span></div>
+                        <div class="food-info-area">
+                            <h3 class="food-name">Oats with Almonds</h3>
+                            <div class="food-nutrition">
+                                <span class="nutrition-badge">Portion: 1 bowl</span>
+                                <span class="calorie-text">~250 kcal</span>
+                            </div>
+                            <p class="food-method" style="margin-top: 4px;">Fiber: 8g | Fat: 5g | Soluble fiber helps
+                                lower LDL cholesterol.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lunch -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">Lunch</h3>
+                </div>
+                <div class="food-list">
+                    <div class="food-card">
+                        <div class="food-image-area"><span class="food-emoji">🐟</span></div>
+                        <div class="food-info-area">
+                            <h3 class="food-name">Steamed Ilish & Vegetables</h3>
+                            <div class="food-nutrition">
+                                <span class="nutrition-badge">Portion: 1 piece fish, 1 cup veg</span>
+                                <span class="calorie-text">~400 kcal</span>
+                            </div>
+                            <p class="food-method" style="margin-top: 4px;">Fiber: 4g | Fat: 15g | Rich in Omega-3 fatty
+                                acids which raise HDL.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dinner -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h3 class="section-title">Dinner</h3>
+                </div>
+                <div class="food-list">
+                    <div class="food-card">
+                        <div class="food-image-area"><span class="food-emoji">🥗</span></div>
+                        <div class="food-info-area">
+                            <h3 class="food-name">Mixed Dal & Salad</h3>
+                            <div class="food-nutrition">
+                                <span class="nutrition-badge">Portion: 1 cup Dal, large salad</span>
+                                <span class="calorie-text">~280 kcal</span>
+                            </div>
+                            <p class="food-method" style="margin-top: 4px;">Fiber: 12g | Fat: 3g | Plant-based protein
+                                and high fiber content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="coming-soon-notice" style="margin-top: 16px;">More recommendations coming soon.</p>
+        </main>
+    </div>
+
+    <!-- Daily Calorie Log View -->
+    <div id="daily-calorie-log" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">Daily Food Log</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+
+            <!-- Summary Header -->
+            <div class="summary-card">
+                <div class="summary-item highlight" style="flex: 1; align-items: center;">
+                    <span class="summary-label">Today's Total Calories</span>
+                    <span class="summary-value" id="daily-total-calories">0</span>
+                    <span class="summary-label">kcal</span>
+                </div>
+            </div>
+
+            <!-- Meals -->
+            <div class="section-card meal-card">
+                <div class="section-header">
+                    <h3 class="section-title">Breakfast</h3>
+                    <span class="meal-calories" id="breakfast-total">0 kcal</span>
+                </div>
+                <div class="food-log-list" id="breakfast-list"></div>
+                <button class="text-btn add-food-btn" onclick="openFoodSelector('breakfast')">+ Add Food</button>
+            </div>
+
+            <div class="section-card meal-card">
+                <div class="section-header">
+                    <h3 class="section-title">Lunch</h3>
+                    <span class="meal-calories" id="lunch-total">0 kcal</span>
+                </div>
+                <div class="food-log-list" id="lunch-list"></div>
+                <button class="text-btn add-food-btn" onclick="openFoodSelector('lunch')">+ Add Food</button>
+            </div>
+
+            <div class="section-card meal-card">
+                <div class="section-header">
+                    <h3 class="section-title">Dinner</h3>
+                    <span class="meal-calories" id="dinner-total">0 kcal</span>
+                </div>
+                <div class="food-log-list" id="dinner-list"></div>
+                <button class="text-btn add-food-btn" onclick="openFoodSelector('dinner')">+ Add Food</button>
+            </div>
+
+            <div class="section-card meal-card">
+                <div class="section-header">
+                    <h3 class="section-title">Snacks</h3>
+                    <span class="meal-calories" id="snacks-total">0 kcal</span>
+                </div>
+                <div class="food-log-list" id="snacks-list"></div>
+                <button class="text-btn add-food-btn" onclick="openFoodSelector('snacks')">+ Add Food</button>
+            </div>
+
+        </main>
+
+        <!-- Add Food Modal/Overlay -->
+        <div id="food-selector-overlay" class="overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="food-selector-title">Add to Meal</h3>
+                    <button class="icon-button close-modal" onclick="closeFoodSelector()">×</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="current-meal-type">
+
+                    <div class="input-group">
+                        <label for="food-search-input">Select Food</label>
+                        <select id="food-select-input" class="input-field">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="food-grams-input">Amount (grams)</label>
+                        <input type="number" id="food-grams-input" class="input-field" placeholder="e.g. 150">
+                    </div>
+
+                    <button class="primary-btn" onclick="addFoodEntry()">Add Food</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History & Weight Progress View -->
+    <div id="history-progress" class="view">
+        <header class="app-header">
+            <button class="icon-button back-btn" onclick="navigate('home-screen')">←</button>
+            <h1 class="header-title">History & Weight Progress</h1>
+            <div class="header-placeholder"></div>
+        </header>
+        <main class="container">
+
+            <div class="section-card">
+                <h3 class="section-title">Weight Progress</h3>
+                <div class="weight-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">Starting</span>
+                        <span class="stat-value">-- kg</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Current</span>
+                        <span class="stat-value">-- kg</span>
+                    </div>
+                    <div class="stat-box diff">
+                        <span class="stat-label">Change</span>
+                        <span class="stat-value" style="color: var(--text-muted);">-- kg</span>
+                    </div>
+                </div>
+                <!-- Chart Placeholder -->
+                <div class="chart-placeholder">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">📊</div>
+                    <p style="font-weight: 500;">Six-Month Progress Chart</p>
+                    <span class="coming-soon-text">Chart feature coming soon.</span>
+                </div>
+            </div>
+
+            <!-- Record Weight Section -->
+            <div class="section-card">
+                <h3 class="section-title" style="margin-bottom: var(--spacing-md);">Record Weight</h3>
+                <form class="input-row" style="align-items: flex-end;" onsubmit="event.preventDefault();">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label for="weight-date">Date</label>
+                        <input type="date" id="weight-date" class="input-field" required>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label for="weight-input">Weight (kg)</label>
+                        <input type="number" id="weight-input" class="input-field" placeholder="e.g., 72.5" step="0.1"
+                            required>
+                    </div>
+                    <button type="submit" class="primary-btn"
+                        style="margin-top: 0; width: auto; padding: 12px 20px;">Save</button>
+                </form>
+            </div>
+
+            <div class="section-card">
+                <h3 class="section-title">Weight Log</h3>
+
+                <!-- Empty State -->
+                <div class="empty-state">
+                    <div class="empty-icon">⚖️</div>
+                    <p style="font-weight: 500; color: var(--text-main);">No weight records yet.</p>
+                    <p class="coming-soon-text" style="margin-top: 4px;">Record your first weight above to start
+                        tracking!</p>
+                </div>
+
+                <!-- History List -->
+                <div class="history-list">
+                </div>
+
+                <p class="coming-soon-notice" style="margin-top: 16px;">History storage coming soon.</p>
+            </div>
+
+        </main>
+
+    </div>
+
+
+</body>
+
+</html>
