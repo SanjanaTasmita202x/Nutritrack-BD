@@ -334,10 +334,11 @@ button {
 .feature-card {
     background-color: var(--card-bg);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     box-shadow: var(--shadow-sm);
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
+    text-align: center;
 }
 
 .feature-card:active {
@@ -345,18 +346,18 @@ button {
 }
 
 .card-icon {
-    font-size: 2rem;
-    margin-bottom: var(--spacing-sm);
+    font-size: 1.8rem;
+    margin-bottom: 4px;
 }
 
 .card-title {
-    font-size: 1.15rem;
-    margin-bottom: 4px;
+    font-size: 1.05rem;
+    margin-bottom: 2px;
 }
 
 .card-desc {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 /* Result Card */
